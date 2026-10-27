@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Foodie Hub | Food Ordering</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fffaf4;
+    color: #333;
+}
+
+/* Navigation */
+nav {
+    background: #ff5722;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    font-weight: bold;
+}
+
+.cart-button {
+    background: white;
+    color: #ff5722;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 330px;
+    padding: 55px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    background: linear-gradient(120deg, #ffe0b2, #fff3e0);
+}
+
+.hero-content {
+    flex: 1 1 280px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    color: #d84315;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.hero img {
+    width: min(100%, 360px);
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.primary-button {
+    display: inline-block;
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Restaurant Details */
+.restaurant {
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.restaurant h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.restaurant p {
+    color: #666;
+    line-height: 1.8;
+}
+
+/* Offers */
+.offer {
+    margin: 10px 7% 30px;
+    padding: 22px;
+    border-radius: 15px;
+    background: linear-gradient(120deg, #ff7043, #e53935);
+    color: white;
+    text-align: center;
+}
+
+.offer h2 {
+    margin-bottom: 10px;
+}
+
+/* Menu */
+.menu-section {
+    padding: 25px 7% 45px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 30px;
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.category-button {
+    padding: 10px 18px;
+    border: 1px solid #ff5722;
+    background: white;
+    color: #e64a19;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.category-button.active,
+.category-button:hover {
+    background: #ff5722;
+    color: white;
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.food-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px #00000012;
+    transition: transform 0.2s;
+}
+
+.food-card:hover {
+    transform: translateY(-5px);
+}
+
+.food-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.food-info {
+    padding: 17px;
+}
+
+.food-info h3 {
+    margin-bottom: 8px;
+}
+
+.food-info p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 42px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.price {
+    color: #e64a19;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.add-button {
+    border: none;
+    background: #ff5722;
+    color: white;
+    padding: 10px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background: #d84315;
+}
+
+/* Cart */
+.cart-section {
+    padding: 35px 7%;
+    background: #fff0e5;
+}
+
+.cart-section h2 {
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.cart-list {
+    max-width: 600px;
+    margin: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.remove-button {
+    color: #c62828;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.cart-total {
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Reviews */
+.reviews {
+    padding: 45px 7%;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.review-card {
+    padding: 22px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #00000010;
+    line-height: 1.7;
+}
+
+.stars {
+    color: #ff9800;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background: #292421;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+    line-height: 1.8;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #222;
+    outline-offset: 3px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 800px) {
+    .food-grid,
+    .review-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 0 7px;
+    }
+}
+
+@media (max-width: 520px) {
+    .food-grid,
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .hero img {
+        max-width: 300px;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    nav div {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    nav a {
+        margin: 0;
+    }
+
+    .food-card img {
+        height: 220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="logo">🍽️ Foodie Hub</div>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <button class="cart-button"
+            onclick="document.getElementById('cart').scrollIntoView()">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Delicious Food,<br>Delivered Fresh!</h1>
+
+        <p>
+            Discover your favourite meals at Foodie Hub.
+            Fresh ingredients, delicious flavours, and great offers!
+        </p>
+
+        <a href="#menu" class="primary-button">Explore Menu 🍕</a>
+    </div>
+
+    <img
+        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80"
+        alt="A delicious selection of freshly prepared food">
+</section>
+
+<!-- Restaurant Details -->
+<section class="restaurant">
+    <h2>Foodie Hub Restaurant</h2>
+
+    <p>📍 Vijayawada, Andhra Pradesh</p>
+    <p>⭐ 4.5/5 Customer Rating | 🍴 Indian & International Cuisine</p>
+    <p>🕒 Open: 10:00 AM – 10:00 PM</p>
+    <p>🚚 Demo delivery charge: ₹30</p>
+</section>
+
+<!-- Special Offer -->
+<section class="offer">
+    <h2>🎉 Special Offer!</h2>
+
+    <p>
+        Get 10% OFF on food orders of ₹500 or more.
+        Maximum discount: ₹100.
+    </p>
+
+    <p>Use offer code: <strong>FOOD10</strong></p>
+</section>
+
+<!-- Menu -->
+<section class="menu-section" id="menu">
+    <h2 class="section-title">Our Delicious Menu 🍴</h2>
+
+    <div class="categories">
+        <button class="category-button active"
+                onclick="filterFood('All', this)">All</button>
+
+        <button class="category-button"
+                onclick="filterFood('Biryani', this)">🍚 Biryani</button>
+
+        <button class="category-button"
+                onclick="filterFood('Pizza', this)">🍕 Pizza</button>
+
+        <button class="category-button"
+                onclick="filterFood('Burger', this)">🍔 Burgers</button>
+
+        <button class="category-button"
+                onclick="filterFood('Dessert', this)">🍰 Desserts</button>
+    </div>
+
+    <div class="food-grid" id="foodGrid"></div>
+</section>
+
+<!-- Shopping Cart -->
+<section class="cart-section" id="cart">
+    <h2>🛒 Your Shopping Cart</h2>
+
+    <div class="cart-list" id="cartList">
+        <p style="text-align:center">Your cart is empty.</p>
+    </div>
+
+    <div class="cart-total" id="cartTotal">Total: ₹0</div>
+
+    <div style="text-align:center">
+        <button class="primary-button" onclick="checkout()">
+            Place Demo Order
+        </button>
+    </div>
+
+    <p id="orderMessage"
+       role="status"
+       aria-live="polite"
+       style="margin-top:15px"></p>
+</section>
+
+<!-- Customer Reviews -->
+<section class="reviews" id="reviews">
+    <h2 class="section-title">What Our Customers Say ⭐</h2>
+
+    <div class="review-grid">
+        <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>"The biryani was delicious, fresh, and full of flavour!"</p>
+            <br>
+            <strong>— Rahul</strong>
+        </article>
+
+        <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>"Loved the pizza! The menu is simple and easy to use."</p>
+            <br>
+            <strong>— Priya</strong>
+        </article>
+
+        <article class="review-card">
+            <div class="stars">★★★★☆</div>
+            <p>"Great food options and attractive special offers."</p>
+            <br>
+            <strong>— Arjun</strong>
+        </article>
+    </div>
+
+    <p style="margin-top:20px;color:#777">
+        Sample reviews for this college project.
+    </p>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+    <h2>🍽️ Foodie Hub</h2>
+    <p>Fresh Food | Great Taste | Happy Customers</p>
+    <p>Location: Vijayawada, Andhra Pradesh</p>
+    <p>Contact: foodiehub@example.com</p>
+    <p>© 2026 Foodie Hub. Student Project Demo.</p>
+</footer>
+
+<script>
+const foods = [
+    {
+        id: 1,
+        name: "Chicken Biryani",
+        category: "Biryani",
+        price: 220,
+        description: "Aromatic rice with delicious spices and chicken.",
+        image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 2,
+        name: "Veg Biryani",
+        category: "Biryani",
+        price: 160,
+        description: "Flavourful rice cooked with fresh vegetables.",
+        image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 3,
+        name: "Cheese Pizza",
+        category: "Pizza",
+        price: 250,
+        description: "Cheesy pizza topped with herbs and vegetables.",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 4,
+        name: "Veg Burger",
+        category: "Burger",
+        price: 120,
+        description: "Crispy vegetable patty with fresh lettuce.",
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 5,
+        name: "Chocolate Cake",
+        category: "Dessert",
+        price: 100,
+        description: "Rich chocolate cake for dessert lovers.",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 6,
+        name: "Classic Pizza",
+        category: "Pizza",
+        price: 200,
+        description: "Classic pizza with tomato sauce and cheese.",
+        image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=600&q=80"
+    }
+];
+
+let cart = [];
+
+const foodGrid = document.getElementById("foodGrid");
+
+function displayFood(category = "All") {
+    foodGrid.replaceChildren();
+
+    const filteredFoods = category === "All"
+        ? foods
+        : foods.filter(food => food.category === category);
+
+    filteredFoods.forEach(food => {
+        const card = document.createElement("article");
+        card.className = "food-card";
+
+        const img = document.createElement("img");
+        img.src = food.image;
+        img.alt = food.name;
+        img.loading = "lazy";
+
+        const info = document.createElement("div");
+        info.className = "food-info";
+
+        const title = document.createElement("h3");
+        title.textContent = food.name;
+
+        const description = document.createElement("p");
+        description.textContent = food.description;
+
+        const row = document.createElement("div");
+        row.className = "price-row";
+
+        const price = document.createElement("span");
+        price.className = "price";
+        price.textContent = `₹${food.price}`;
+
+        const button = document.createElement("button");
+        button.className = "add-button";
+        button.textContent = "Add +";
+        button.setAttribute("aria-label", `Add ${food.name} to cart`);
+        button.addEventListener("click", () => addToCart(food.id));
+
+        row.append(price, button);
+        info.append(title, description, row);
+        card.append(img, info);
+        foodGrid.append(card);
+    });
+}
+
+function filterFood(category, button) {
+    document.querySelectorAll(".category-button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    displayFood(category);
+}
+
+function addToCart(id) {
+    const food = foods.find(item => item.id === id);
+    const existing = cart.find(item => item.id === id);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({ ...food, quantity: 1 });
+    }
+
+    document.getElementById("orderMessage").textContent = "";
+    renderCart();
+}
+
+function removeFromCart(id) {
+    const item = cart.find(item => item.id === id);
+
+    if (!item) return;
+
+    if (item.quantity > 1) {
+        item.quantity--;
+    } else {
+        cart = cart.filter(item => item.id !== id);
+    }
+
+    renderCart();
+}
+
+function renderCart() {
+    const cartList = document.getElementById("cartList");
+    cartList.replaceChildren();
+
+    let count = 0;
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        count += item.quantity;
+        subtotal += item.price * item.quantity;
+
+        const row = document.createElement("div");
+        row.className = "cart-item";
+
+        const name = document.createElement("span");
+        name.textContent =
+            `${item.name} × ${item.quantity} — ₹${item.price * item.quantity}`;
+
+        const remove = document.createElement("button");
+        remove.className = "remove-button";
+        remove.textContent = "Remove";
+        remove.setAttribute("aria-label", `Remove one ${item.name}`);
+        remove.addEventListener("click", () => removeFromCart(item.id));
+
+        row.append(name, remove);
+        cartList.append(row);
+    });
+
+    if (cart.length === 0) {
+        const empty = document.createElement("p");
+        empty.style.textAlign = "center";
+        empty.textContent = "Your cart is empty.";
+        cartList.append(empty);
+    }
+
+    document.getElementById("cartCount").textContent = count;
+
+    const discount = subtotal >= 500
+        ? Math.min(subtotal * 0.10, 100)
+        : 0;
+
+    const delivery = subtotal > 0 ? 30 : 0;
+    const total = subtotal - discount + delivery;
+
+    document.getElementById("cartTotal").textContent =
+        `Subtotal: ₹${subtotal} | Discount: ₹${discount.toFixed(2)} | ` +
+        `Delivery: ₹${delivery} | Total: ₹${total.toFixed(2)}`;
+}
+
+function checkout() {
+    const message = document.getElementById("orderMessage");
+
+    if (cart.length === 0) {
+        message.textContent = "Please add food items before ordering.";
+        return;
+    }
+
+    message.textContent =
+        "Demo order created successfully! No payment was collected.";
+
+    cart = [];
+    renderCart();
+}
+
+displayFood();
+renderCart();
+</script>
+
+</body>
+</html>
+
